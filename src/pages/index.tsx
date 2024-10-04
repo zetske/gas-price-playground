@@ -6,7 +6,7 @@ import { holesky } from "viem/chains";
 import { useEstimateFeesPerGas, useGasPrice } from "wagmi";
 import { useApprove, useApproveGasCost } from "../web3/hooks";
 import { formatUnits } from "viem";
-import { codeString, codeString2, codeString3, codeString4 } from "./home/content";
+import { codeString, codeString2, codeString3, codeString4 } from "../content/index";
 
 const Home: NextPage = () => {
   const { data: gasPrice, refetch } = useGasPrice({
