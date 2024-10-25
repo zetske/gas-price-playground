@@ -33,7 +33,8 @@ export const codeString = `
 
   export const codeString3 = `
     // this is what we see in Metamask
-    const approveFee = formatUnits(approveGas * gasPrice, 18);
+    const approveFee = gasPrice * approveGas;
+    const approveFeeInEth = formatUnits(approveFee, 18);
 
     // when working with a user's MAX amount, you can add a small 
     // buffer to ensure the transaction goes through

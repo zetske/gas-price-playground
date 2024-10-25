@@ -19,3 +19,9 @@ pre {
   background-color: #f6f8fa;
   border-radius: 5px;
 }
+
+@media screen and (max-width: 1000px) {
+  pre {
+    margin: 0;
+  }
+}

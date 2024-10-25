@@ -6,7 +6,12 @@ import { holesky } from "viem/chains";
 import { useEstimateFeesPerGas, useGasPrice } from "wagmi";
 import { useApprove, useApproveGasCost } from "../web3/hooks";
 import { formatUnits } from "viem";
-import { codeString, codeString2, codeString3, codeString4 } from "../content/index";
+import {
+  codeString,
+  codeString2,
+  codeString3,
+  codeString4,
+} from "../content/index";
 
 const Home: NextPage = () => {
   const { data: gasPrice, refetch } = useGasPrice({
@@ -20,13 +25,14 @@ const Home: NextPage = () => {
   });
 
   const approve = useApprove();
-  const approveGas = useApproveGasCost();
+  const { approveGas, refetch: refetchApproveGasCost } = useApproveGasCost();
 
   if (!gasPrice || !approveGas || !data || !gasPriceOnMainnet) {
     return <div className={styles.main}>Loading...</div>;
   }
 
-  const approveFee = formatUnits(approveGas * gasPrice, 18);
+  const approveFee = gasPrice * approveGas;
+  const approveFeeInEth = formatUnits(approveFee, 18);
 
   const handleApprove = async () => {
     try {
@@ -37,7 +43,10 @@ const Home: NextPage = () => {
     }
   };
 
-  console.log(approveGas);
+  const refetchData = () => {
+    refetch();
+    refetchApproveGasCost();
+  };
 
   return (
     <div className={styles.container}>
@@ -46,28 +55,9 @@ const Home: NextPage = () => {
         <link href="/favicon.ico" rel="icon" />
       </Head>
       <main className={styles.main}>
-        <h2
-          style={{
-            position: "absolute",
-            top: "0",
-          }}
-        >
-          Understanding Gas Calculation
-        </h2>
-        <div
-          style={{
-            width: "100%",
-            display: "grid",
-            gridTemplateColumns: "repeat(2,1fr)",
-            gap: "1rem",
-            justifyContent: "left",
-          }}
-        >
-          <div
-            style={{
-              display: "grid",
-            }}
-          >
+        <h2 className={styles.header}>Understanding Gas Calculation</h2>
+        <div className={styles.items}>
+          <div className={styles.section}>
             <pre>
               <code>{codeString}</code>
             </pre>
@@ -78,32 +68,39 @@ const Home: NextPage = () => {
               <code>{codeString3}</code>
             </pre>
           </div>
-          <div
-            style={{
-              display: "grid",
-            }}
-          >
-            <div>
+          <div className={styles.section}>
+            <div
+              style={{
+                marginTop: "13px",
+              }}
+            >
               <ConnectButton />
+            </div>
+            <div>
               <div
                 style={{
                   display: "grid",
+                  height: "100%",
                   gap: "1rem",
                   gridTemplateColumns: "1fr 1fr",
                 }}
               >
                 <div className={styles.grid}>
                   <h2>Current Gas Price</h2>
-                  <p>mainnet: {formatUnits(gasPriceOnMainnet, 9)}</p>
-                  <p>holesky: {formatUnits(gasPrice, 9)} </p>
-                  <button onClick={() => refetch()}>Refresh</button>
+                  <div>
+                    <p>mainnet: {formatUnits(gasPriceOnMainnet, 9)}</p>
+                    <p>holesky: {formatUnits(gasPrice, 9)} </p>
+                  </div>
+                  <button onClick={refetchData}>Refresh</button>
                 </div>
 
                 <div className={styles.grid}>
                   <h2>Approve spend of 1 OMNI</h2>
-                  <p>
-                    Transaction cost will be ~
-                    {parseFloat(approveFee).toFixed(8)} ETH
+                  <p style={{
+                    lineHeight: "1.5",
+                  }}>
+                    Transaction cost will be:
+                    <br></br> ± {parseFloat(approveFeeInEth).toFixed(8)} ETH
                   </p>
                   <button onClick={handleApprove}>Approve</button>
                 </div>
