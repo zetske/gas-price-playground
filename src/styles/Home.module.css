@@ -12,6 +12,15 @@
   position: relative;
 }
 
+@media screen and (max-width: 700px) {
+  .container {
+    padding: 0 1rem;
+  }
+  .main {
+    padding: 2rem 0;
+  }
+}
+
 .header {
   column-span: 2;
   text-align: center;
@@ -64,6 +73,19 @@
 
   .items pre {
     font-size: 11px;
+  }
+}
+
+.right {
+  display: grid;
+  height: 100%;
+  gap: 1rem;
+  grid-template-columns: 1fr 1fr;
+}
+
+@media screen and (max-width: 500px) {
+  .right{
+    grid-template-columns: 1fr;
   }
 }
 

@@ -77,14 +77,7 @@ const Home: NextPage = () => {
               <ConnectButton />
             </div>
             <div>
-              <div
-                style={{
-                  display: "grid",
-                  height: "100%",
-                  gap: "1rem",
-                  gridTemplateColumns: "1fr 1fr",
-                }}
-              >
+              <div className={styles.right}>
                 <div className={styles.grid}>
                   <h2>Current Gas Price</h2>
                   <div>
@@ -96,9 +89,11 @@ const Home: NextPage = () => {
 
                 <div className={styles.grid}>
                   <h2>Approve spend of 1 OMNI</h2>
-                  <p style={{
-                    lineHeight: "1.5",
-                  }}>
+                  <p
+                    style={{
+                      lineHeight: "1.5",
+                    }}
+                  >
                     Transaction cost will be:
                     <br></br> ± {parseFloat(approveFeeInEth).toFixed(8)} ETH
                   </p>
@@ -134,7 +129,6 @@ const Home: NextPage = () => {
           </div>
         </div>
       </main>
-
       <footer className={styles.footer}>Made with ❤️ by Anzette</footer>
     </div>
   );
