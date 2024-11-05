@@ -1,4 +1,5 @@
 import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { LuLoader2 } from "react-icons/lu";
 import type { NextPage } from "next";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
@@ -29,7 +30,7 @@ const Home: NextPage = () => {
   const { approveGas, refetch: refetchApproveGasCost } = useApproveGasCost();
 
   if (!gasPrice || !approveGas || !data || !gasPriceOnMainnet) {
-    return <div className={styles.main}>Loading...</div>;
+    return <div className={styles.loading}><LuLoader2 /></div>;
   }
 
   const approveFee = gasPrice * approveGas;
