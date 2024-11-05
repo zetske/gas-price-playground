@@ -12,6 +12,7 @@ import {
   codeString3,
   codeString4,
 } from "../content/index";
+import Link from "next/link";
 
 const Home: NextPage = () => {
   const { data: gasPrice, refetch } = useGasPrice({
@@ -107,7 +108,7 @@ const Home: NextPage = () => {
               }}
               className={styles.grid}
             >
-              <h2>encodeFunctionData() from viem</h2>
+              <h3>encodeFunctionData() from viem</h3>
               <p>
                 Encodes the function name and parameters into an ABI encoded
                 value (4 byte selector & arguments).
@@ -129,7 +130,9 @@ const Home: NextPage = () => {
           </div>
         </div>
       </main>
-      <footer className={styles.footer}>Made with ❤️ by Anzette</footer>
+      <footer className={styles.footer}>
+        <Link target="blank" href={'https://github.com/zetske'}>Made with ❤️ by Anzette</Link>
+      </footer>
     </div>
   );
 };
